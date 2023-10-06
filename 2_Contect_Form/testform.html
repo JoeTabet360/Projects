@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div>
+        <h1 style="margin-top: 2rem; color: red;">This is a Working form, if you where to send an email Right know it
+            will be send to my email, Plz dont do
+            that. You Can find the js code in the (testform.html) or you can go to (web3forms.com) and figore it out on
+            your own
+        </h1>
+    </div>
+
+    <form action="https://api.web3forms.com/submit" method="POST" id="form">
+        <input type="hidden" name="access_key" value="af7fc389-cd74-4a78-8397-c869b6110245" />
+        <input type="hidden" name="subject" value="Custemer" class="from" />
+        <input type="checkbox" name="botcheck" id="" style="display: none;" />
+
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" class="name" placeholder="Full Name" required <label for="email">Email
+        Address</label>
+        <input type="email" name="email" id="email" placeholder="you@company.com" required <label for="phone">Phone
+        Number</label>
+        <input type="text" name="phone" id="phone" placeholder="+961 12-534-567" required />
+
+
+        <label for="message">Your
+            Message</label>
+
+        <textarea rows="5" name="message" id="message" placeholder="Your Message" required></textarea>
+
+
+        <div style="display: flex; justify-content: center; margin-top: 2rem;"><button class="sub"
+                type="submit">Send</button>
+        </div>
+        <p id="result"></p>
+    </form>
+
+
+    <script>
+        const form = document.getElementById("form");
+        const result = document.getElementById("result");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+            const object = Object.fromEntries(formData);
+            object.subject = `${document.querySelector(".name").value} (Custemer)`
+            const json = JSON.stringify(object);
+
+
+
+            console.log(object.subject)
+            console.log(object)
+            console.log(formData)
+
+            result.innerHTML = "Please wait...";
+
+            fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: json,
+
+            })
+                .then(async (response) => {
+                    let json = await response.json();
+                    if (response.status == 200) {
+                        result.innerHTML = json.message;
+                        result.classList.remove("text-gray-500");
+                        result.classList.add("text-green-500");
+
+                        //console.log(response)
+                        //json.data.subject = document.querySelector(".name").value
+                        console.log(json)
+
+                    } else {
+                        console.log(response);
+                        result.innerHTML = json.message;
+                        result.classList.remove("text-gray-500");
+                        result.classList.add("text-red-500");
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                    result.innerHTML = "Something went wrong!";
+                })
+                .then(function () {
+                    form.reset();
+                    setTimeout(() => {
+                        result.style.display = "none";
+                    }, 4000);
+                });
+        });
+
+
+        //document.querySelector(".from").value = document.querySelector(".name")
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+body {
+    background-color: darkslategray;
+    height: 100vh;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+
+form {
+
+
+
+    padding: 5rem;
+    background-color: antiquewhite;
+    border-radius: 1rem;
+
+}
+
+
+
+
+input,
+textarea {
+    display: block;
+    width: 25rem;
+
+    padding: 1rem 0.8rem;
+
+    border: none;
+    margin: 0.8rem 0;
+    background-color: rgb(243, 242, 242);
+    border-color: orange;
+}
+
+.sub {
+    padding: 0.8rem 3rem;
+    border-radius: 1.5rem;
+    font-size: 1rem;
+    border: none;
+    background-color: orange;
+    cursor: pointer;
+}
